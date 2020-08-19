@@ -47,6 +47,9 @@ dependencies {
     testCompile group: 'org.jacoco', name: 'org.jacoco.agent', version: '0.8.4'
     // https://mvnrepository.com/artifact/org.jacoco/org.jacoco.ant//EDE ajout
     testCompile group: 'org.jacoco', name: 'org.jacoco.ant', version: '0.8.4'
+    // https://mvnrepository.com/artifact/org.modelmapper/modelmapper//EDE ajout
+    compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
+
     // https://mvnrepository.com/artifact/gradle.plugin.com.github.spotbugs/spotbugs-gradle-plugin//EDE ajout
   //  compile group: 'gradle.plugin.com.github.spotbugs', name: 'spotbugs-gradle-plugin', version: '2.0.0'
     //spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1'

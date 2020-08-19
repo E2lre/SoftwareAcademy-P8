@@ -21,6 +21,10 @@ import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
 import tourGuide.helper.InternalTestHelper;
+import tourGuide.helper.Util;
+import tourGuide.model.NearestAttraction;
+import tourGuide.model.NearestAttractionsForUser;
+import tourGuide.model.UserDTO;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
@@ -97,10 +101,31 @@ public class TourGuideService {
 				nearbyAttractions.add(attraction);
 			}
 		}
-		
+
 		return nearbyAttractions;
 	}
-	
+//EDE Add for getNearbyAttractions
+	public NearestAttractionsForUser getNearByAttractionsForUSer(User user, VisitedLocation visitedLocation) {
+		List<NearestAttraction> nearestAttractions = new ArrayList();
+		List<NearestAttraction> nearestAttractionList = new ArrayList();
+
+		Util util = new Util();
+		UserDTO userDto = util.convertToDto(user);
+		//userDto = util.convertToDto(user);
+
+		for(Attraction attraction : gpsUtil.getAttractions()) {
+			Location locationAttraction = new Location(attraction.latitude,attraction.longitude);
+			NearestAttraction nearestAttraction = new NearestAttraction(attraction,rewardsService.getDistance(locationAttraction, userDto.getLastVisitedLocation().location),rewardsService.getRewardPoints(attraction,user));
+			nearestAttractions.add(nearestAttraction);
+		}
+		nearestAttractionList = util.selectFiveProxyAttraction(nearestAttractions);
+
+
+		NearestAttractionsForUser nearestAttractionsForUserResult = new NearestAttractionsForUser(userDto.convertToDto(user),nearestAttractionList);
+
+		return nearestAttractionsForUserResult;
+	}
+
 	private void addShutDownHook() {
 		Runtime.getRuntime().addShutdownHook(new Thread() { 
 		      public void run() {
@@ -152,5 +177,5 @@ public class TourGuideService {
 		LocalDateTime localDateTime = LocalDateTime.now().minusDays(new Random().nextInt(30));
 	    return Date.from(localDateTime.toInstant(ZoneOffset.UTC));
 	}
-	
+
 }
