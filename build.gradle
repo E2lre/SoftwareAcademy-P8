@@ -21,6 +21,7 @@ bootJar {
 }
 
 repositories {
+
     mavenCentral()
     flatDir {
         dirs 'libs'
@@ -42,8 +43,24 @@ dependencies {
     
     testCompile("junit:junit")
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.1.6.RELEASE'
-}
+    // https://mvnrepository.com/artifact/org.jacoco/org.jacoco.agent //EDE ajout
+    testCompile group: 'org.jacoco', name: 'org.jacoco.agent', version: '0.8.4'
+    // https://mvnrepository.com/artifact/org.jacoco/org.jacoco.ant//EDE ajout
+    testCompile group: 'org.jacoco', name: 'org.jacoco.ant', version: '0.8.4'
+    // https://mvnrepository.com/artifact/gradle.plugin.com.github.spotbugs/spotbugs-gradle-plugin//EDE ajout
+  //  compile group: 'gradle.plugin.com.github.spotbugs', name: 'spotbugs-gradle-plugin', version: '2.0.0'
+    //spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1'
 
+
+
+
+}
+//Ajout EDE
+/*
+spotbugs {
+    toolVersion = '4.1.1'
+}
+*/
 
 jacoco {
     toolVersion = "0.8.4"

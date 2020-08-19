@@ -19,7 +19,7 @@ public class RewardsService {
 	// proximity in miles
     private int defaultProximityBuffer = 10;
 	private int proximityBuffer = defaultProximityBuffer;
-	private int attractionProximityRange = 200;
+	private int attractionProximityRange = 20000; //TODO EDE a enlever
 	private final GpsUtil gpsUtil;
 	private final RewardCentral rewardsCentral;
 	
