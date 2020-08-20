@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TourGuide</a> &gt; <a href="index.source.html" class="el_package">tourGuide.model</a> &gt; <span class="el_source">UserDTO.java</span></div><h1>UserDTO.java</h1><pre class="source lang-java linenums">package tourGuide.model;
+
+import gpsUtil.location.VisitedLocation;
+import org.modelmapper.ModelMapper;
+import tourGuide.user.User;
+
+import java.util.Date;
+import java.util.UUID;
+
+public class UserDTO {
+
+
+
+    private UUID userId;
+    private String userName;
+    private String phoneNumber;
+    private String emailAddress;
+    private Date latestLocationTimestamp;
+    private VisitedLocation lastVisitedLocation;
+
+<span class="nc" id="L21">    public UserDTO() {</span>
+<span class="nc" id="L22">    }</span>
+
+<span class="nc" id="L24">    public UserDTO(UUID userId, String userName, String phoneNumber, String emailAddress, Date latestLocationTimestamp, VisitedLocation lastVisitedLocation) {</span>
+<span class="nc" id="L25">        this.userId = userId;</span>
+<span class="nc" id="L26">        this.userName = userName;</span>
+<span class="nc" id="L27">        this.phoneNumber = phoneNumber;</span>
+<span class="nc" id="L28">        this.emailAddress = emailAddress;</span>
+<span class="nc" id="L29">        this.latestLocationTimestamp = latestLocationTimestamp;</span>
+<span class="nc" id="L30">        this.lastVisitedLocation = lastVisitedLocation;</span>
+<span class="nc" id="L31">    }</span>
+
+
+
+    public UUID getUserId() {
+<span class="nc" id="L36">        return userId;</span>
+    }
+
+    public void setUserId(UUID userId) {
+<span class="nc" id="L40">        this.userId = userId;</span>
+<span class="nc" id="L41">    }</span>
+
+    public String getUserName() {
+<span class="nc" id="L44">        return userName;</span>
+    }
+
+    public void setUserName(String userName) {
+<span class="nc" id="L48">        this.userName = userName;</span>
+<span class="nc" id="L49">    }</span>
+
+    public String getPhoneNumber() {
+<span class="nc" id="L52">        return phoneNumber;</span>
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+<span class="nc" id="L56">        this.phoneNumber = phoneNumber;</span>
+<span class="nc" id="L57">    }</span>
+
+    public String getEmailAddress() {
+<span class="nc" id="L60">        return emailAddress;</span>
+    }
+
+    public void setEmailAddress(String emailAddress) {
+<span class="nc" id="L64">        this.emailAddress = emailAddress;</span>
+<span class="nc" id="L65">    }</span>
+
+    public Date getLatestLocationTimestamp() {
+<span class="nc" id="L68">        return latestLocationTimestamp;</span>
+    }
+
+    public void setLatestLocationTimestamp(Date latestLocationTimestamp) {
+<span class="nc" id="L72">        this.latestLocationTimestamp = latestLocationTimestamp;</span>
+<span class="nc" id="L73">    }</span>
+
+    public VisitedLocation getLastVisitedLocation() {
+<span class="nc" id="L76">        return lastVisitedLocation;</span>
+    }
+
+    public void setLastVisitedLocation(VisitedLocation lastVisitedLocation) {
+<span class="nc" id="L80">        this.lastVisitedLocation = lastVisitedLocation;</span>
+<span class="nc" id="L81">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L85">        return &quot;UserDTO{&quot; +</span>
+                &quot;userId=&quot; + userId +
+                &quot;, userName='&quot; + userName + '\'' +
+                &quot;, phoneNumber='&quot; + phoneNumber + '\'' +
+                &quot;, emailAddress='&quot; + emailAddress + '\'' +
+                &quot;, latestLocationTimestamp=&quot; + latestLocationTimestamp +
+                &quot;, lastVisitedLocation=&quot; + lastVisitedLocation +
+                '}';
+    }
+
+    public UserDTO convertToDto(User user) {
+<span class="nc" id="L96">        ModelMapper modelMapper = new ModelMapper();</span>
+<span class="nc" id="L97">        UserDTO userDto = modelMapper.map(user, UserDTO.class);</span>
+<span class="nc" id="L98">        return userDto;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

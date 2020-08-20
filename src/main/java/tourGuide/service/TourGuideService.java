@@ -24,6 +24,7 @@ import tourGuide.helper.InternalTestHelper;
 import tourGuide.helper.Util;
 import tourGuide.model.NearestAttraction;
 import tourGuide.model.NearestAttractionsForUser;
+import tourGuide.model.UserCurentLocation;
 import tourGuide.model.UserDTO;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
@@ -64,7 +65,21 @@ public class TourGuideService {
 			trackUserLocation(user);
 		return visitedLocation;
 	}
-	
+
+	public List<UserCurentLocation> getAllCurrentLocations(){
+		List<UserCurentLocation> userCurentLocations = new ArrayList<>();
+		List<User> userList = getAllUsers();
+		for (User user : userList) {
+
+			VisitedLocation lastVisitedLocation = user.getLastVisitedLocation();
+			Location location = new Location(lastVisitedLocation.location.latitude,lastVisitedLocation.location.longitude);
+			UserCurentLocation userCurentLocation = new UserCurentLocation(user.getUserId(),location);
+			userCurentLocations.add(userCurentLocation);
+		}
+
+		return userCurentLocations;
+	}
+
 	public User getUser(String userName) {
 		return internalUserMap.get(userName);
 	}

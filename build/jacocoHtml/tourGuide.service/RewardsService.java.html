@@ -19,7 +19,7 @@ public class RewardsService {
 	// proximity in miles
 <span class="fc" id="L20">    private int defaultProximityBuffer = 10;</span>
 <span class="fc" id="L21">	private int proximityBuffer = defaultProximityBuffer;</span>
-<span class="fc" id="L22">	private int attractionProximityRange = 200;</span>
+<span class="fc" id="L22">	private int attractionProximityRange = 20000; //TODO EDE a enlever</span>
 	private final GpsUtil gpsUtil;
 	private final RewardCentral rewardsCentral;
 	
@@ -42,7 +42,7 @@ public class RewardsService {
 		
 <span class="fc bfc" id="L43" title="All 2 branches covered.">		for(VisitedLocation visitedLocation : userLocations) {</span>
 <span class="fc bfc" id="L44" title="All 2 branches covered.">			for(Attraction attraction : attractions) {</span>
-<span class="pc bpc" id="L45" title="1 of 2 branches missed.">				if(user.getUserRewards().stream().filter(r -&gt; r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">				if(user.getUserRewards().stream().filter(r -&gt; r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {</span>
 <span class="fc bfc" id="L46" title="All 2 branches covered.">					if(nearAttraction(visitedLocation, attraction)) {</span>
 <span class="fc" id="L47">						user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));</span>
 					}
@@ -58,8 +58,8 @@ public class RewardsService {
 	private boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction) {
 <span class="fc bfc" id="L59" title="All 2 branches covered.">		return getDistance(attraction, visitedLocation.location) &gt; proximityBuffer ? false : true;</span>
 	}
-	
-	private int getRewardPoints(Attraction attraction, User user) {
+
+	public int getRewardPoints(Attraction attraction, User user) {
 <span class="fc" id="L63">		return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());</span>
 	}
 	

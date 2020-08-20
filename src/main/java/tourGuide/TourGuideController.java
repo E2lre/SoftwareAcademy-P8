@@ -12,6 +12,7 @@ import com.jsoniter.output.JsonStream;
 
 import gpsUtil.location.VisitedLocation;
 import tourGuide.model.NearestAttractionsForUser;
+import tourGuide.model.UserCurentLocation;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 import tripPricer.Provider;
@@ -65,7 +66,8 @@ public class TourGuideController {
     }
     
     @RequestMapping("/getAllCurrentLocations")
-    public String getAllCurrentLocations() {
+    //public String getAllCurrentLocations() {
+    public List<UserCurentLocation> getAllCurrentLocations() {
     	// TODO: Get a list of every user's most recent location as JSON
     	//- Note: does not use gpsUtil to query for their current location, 
     	//        but rather gathers the user's current location from their stored location history.
@@ -76,7 +78,7 @@ public class TourGuideController {
     	//        ...
     	//     }
     	
-    	return JsonStream.serialize("");
+    	return tourGuideService.getAllCurrentLocations();
     }
     
     @RequestMapping("/getTripDeals")
