@@ -44,8 +44,10 @@ public class Util {
         for(Map.Entry<Double,NearestAttraction> ent:entires){
             if (i<5) {
                 nearestAttractionListResult.add(ent.getValue());
+            } else {
+                break;
             }
-            i++; //TODO A modifier
+            i++;
         }
         return nearestAttractionListResult;
     }

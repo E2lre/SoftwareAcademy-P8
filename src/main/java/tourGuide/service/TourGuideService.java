@@ -66,6 +66,10 @@ public class TourGuideService {
 		return visitedLocation;
 	}
 
+	/**
+	 * get curent location for evryboby (EDE august 2020)
+	 * @return list of postion for evrybody
+	 */
 	public List<UserCurentLocation> getAllCurrentLocations(){
 		List<UserCurentLocation> userCurentLocations = new ArrayList<>();
 		List<User> userList = getAllUsers();
@@ -108,8 +112,8 @@ public class TourGuideService {
 		rewardsService.calculateRewards(user);
 		return visitedLocation;
 	}
-
-	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
+/* retreive by EDE*/
+/*	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
 		List<Attraction> nearbyAttractions = new ArrayList<>();
 		for(Attraction attraction : gpsUtil.getAttractions()) {
 			if(rewardsService.isWithinAttractionProximity(attraction, visitedLocation.location)) {
@@ -118,25 +122,39 @@ public class TourGuideService {
 		}
 
 		return nearbyAttractions;
-	}
+	}*/
 //EDE Add for getNearbyAttractions
+	//TODO amélioer la perf sur Reward
+
+	/**
+	 * Give the 5 nearest attraction for a user (EDE august 2020)
+	 * @param user user to check attraction
+	 * @param visitedLocation last user's position
+	 * @return list of 5 nearest attractions
+	 */
 	public NearestAttractionsForUser getNearByAttractionsForUSer(User user, VisitedLocation visitedLocation) {
 		List<NearestAttraction> nearestAttractions = new ArrayList();
 		List<NearestAttraction> nearestAttractionList = new ArrayList();
 
+
+
 		Util util = new Util();
 		UserDTO userDto = util.convertToDto(user);
+
 		//userDto = util.convertToDto(user);
 
 		for(Attraction attraction : gpsUtil.getAttractions()) {
 			Location locationAttraction = new Location(attraction.latitude,attraction.longitude);
 			NearestAttraction nearestAttraction = new NearestAttraction(attraction,rewardsService.getDistance(locationAttraction, userDto.getLastVisitedLocation().location),rewardsService.getRewardPoints(attraction,user));
+			//GetREward had bad performance. th reward will be call only for the 5 destination, not for all
+			//NearestAttraction nearestAttraction = new NearestAttraction(attraction,rewardsService.getDistance(locationAttraction, userDto.getLastVisitedLocation().location),0);
 			nearestAttractions.add(nearestAttraction);
 		}
 		nearestAttractionList = util.selectFiveProxyAttraction(nearestAttractions);
 
 
-		NearestAttractionsForUser nearestAttractionsForUserResult = new NearestAttractionsForUser(userDto.convertToDto(user),nearestAttractionList);
+		//NearestAttractionsForUser nearestAttractionsForUserResult = new NearestAttractionsForUser(userDto.convertToDto(user),nearestAttractionList);
+		NearestAttractionsForUser nearestAttractionsForUserResult = new NearestAttractionsForUser(userDto,nearestAttractionList);
 
 		return nearestAttractionsForUserResult;
 	}

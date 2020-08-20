@@ -44,10 +44,12 @@ import java.util.*;
 <span class="nc bnc" id="L44" title="All 2 branches missed.">        for(Map.Entry&lt;Double,NearestAttraction&gt; ent:entires){</span>
 <span class="nc bnc" id="L45" title="All 2 branches missed.">            if (i&lt;5) {</span>
 <span class="nc" id="L46">                nearestAttractionListResult.add(ent.getValue());</span>
+            } else {
+                break;
             }
-<span class="nc" id="L48">            i++; //TODO A modifier</span>
-<span class="nc" id="L49">        }</span>
-<span class="nc" id="L50">        return nearestAttractionListResult;</span>
+<span class="nc" id="L50">            i++;</span>
+<span class="nc" id="L51">        }</span>
+<span class="nc" id="L52">        return nearestAttractionListResult;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
