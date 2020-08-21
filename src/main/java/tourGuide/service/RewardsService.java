@@ -1,21 +1,30 @@
 package tourGuide.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import rewardCentral.RewardCentral;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
 
+import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+
 @Service
-public class RewardsService {
+public class RewardsService  {
+//	public class RewardsService extends Thread {
     private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
 
+	static Semaphore semaphore = new Semaphore(1);
+
+	private Logger logger = LoggerFactory.getLogger(RewardsService.class);
 	// proximity in miles
     private int defaultProximityBuffer = 10;
 	private int proximityBuffer = defaultProximityBuffer;
@@ -36,19 +45,36 @@ public class RewardsService {
 		proximityBuffer = defaultProximityBuffer;
 	}
 	
-	public void calculateRewards(User user) {
-		List<VisitedLocation> userLocations = user.getVisitedLocations();
-		List<Attraction> attractions = gpsUtil.getAttractions();
-		
-		for(VisitedLocation visitedLocation : userLocations) {
-			for(Attraction attraction : attractions) {
-				if(user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
-					if(nearAttraction(visitedLocation, attraction)) {
-						user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
+//	public synchronized void calculateRewards(User user) { //TODO A retirer
+		public  void calculateRewards(User user) {
+/*		Lock verrou = new ReentrantLock();
+		verrou.lock();*/
+		//logger.debug("Start calculateRewards");
+/*		try {
+			semaphore.acquire();
+			logger.debug("semaphore on calculateRewards");*/
+		 List<VisitedLocation> userLocations = user.getVisitedLocations();
+		 List<Attraction> attractions = gpsUtil.getAttractions();
+
+
+				for (VisitedLocation visitedLocation : userLocations) {
+					for (Attraction attraction : attractions) {
+						if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
+							if (nearAttraction(visitedLocation, attraction)) {
+								user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
+							}
+						}
 					}
 				}
-			}
-		}
+/*		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+				//verrou.unlock();
+			semaphore.release();
+		//	logger.debug("semaphore off calculateRewards");
+		}*/
+
+		//logger.debug("End of calculateRewards");
 	}
 	
 	public boolean isWithinAttractionProximity(Attraction attraction, Location location) {

@@ -27,6 +27,7 @@ public class TestTourGuideService {
 
 	@Test
 	public void getUserLocation() {
+		Locale.setDefault(Locale.US);
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);
@@ -103,6 +104,7 @@ public class TestTourGuideService {
 	
 	@Test
 	public void trackUser() {
+		Locale.setDefault(Locale.US);
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);

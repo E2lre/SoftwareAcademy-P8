@@ -22,12 +22,10 @@ import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.helper.Util;
-import tourGuide.model.NearestAttraction;
-import tourGuide.model.NearestAttractionsForUser;
-import tourGuide.model.UserCurentLocation;
-import tourGuide.model.UserDTO;
+import tourGuide.model.*;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
+import tourGuide.user.UserPreferences;
 import tourGuide.user.UserReward;
 import tripPricer.Provider;
 import tripPricer.TripPricer;
@@ -97,13 +95,25 @@ public class TourGuideService {
 			internalUserMap.put(user.getUserName(), user);
 		}
 	}
-	
+
+	//EDE August 2020 : modification to check price with preference
 	public List<Provider> getTripDeals(User user) {
 		int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
 		List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(), 
 				user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(), cumulatativeRewardPoints);
-		user.setTripDeals(providers);
-		return providers;
+
+		List<Provider> providersResult = new ArrayList<>();
+		for (Provider provider : providers) {
+			if (provider.price <= user.getUserPreferences().getHighPricePoint().getNumber().doubleValue()) {
+				providersResult.add(provider);
+			}
+		}
+
+		//user.setTripDeals(providers);
+		//return providers;
+		user.setTripDeals(providersResult);
+		return providersResult;
+
 	}
 	
 	public VisitedLocation trackUserLocation(User user) {
@@ -136,8 +146,6 @@ public class TourGuideService {
 		List<NearestAttraction> nearestAttractions = new ArrayList();
 		List<NearestAttraction> nearestAttractionList = new ArrayList();
 
-
-
 		Util util = new Util();
 		UserDTO userDto = util.convertToDto(user);
 
@@ -157,6 +165,34 @@ public class TourGuideService {
 		NearestAttractionsForUser nearestAttractionsForUserResult = new NearestAttractionsForUser(userDto,nearestAttractionList);
 
 		return nearestAttractionsForUserResult;
+	}
+
+	/**
+	 * get the user preference for a user (EDE august 2020)
+	 * @param userName userName of the user
+	 * @return curent preference for the user
+	 */
+	public UserPreferenceDTO getUserPreference(String userName){
+
+		User curentUser = getUser(userName);
+		UserPreferences userPreferenceResult = curentUser.getUserPreferences();
+		Util util = new Util();
+		return util.convertUserPreferenceToDto(userPreferenceResult);
+	}
+	/**
+	 * set the user preference for a user (EDE august 2020)
+	 * @param userName userName of the user
+	 * @param userPreference new preference for the user
+	 * @return new preference
+	 */
+	public UserPreferenceDTO setUserPreference(String userName, UserPreferenceDTO userPreference){
+		UserPreferences userPreferenceResult = null;
+		User curentUser = getUser(userName);
+
+		UserPreferences curentUserPreference = curentUser.getUserPreferences();
+		Util util = new Util();
+		curentUser.setUserPreferences(util.convertDtoToUserPreference(userPreference));
+		return util.convertUserPreferenceToDto(curentUser.getUserPreferences());
 	}
 
 	private void addShutDownHook() {

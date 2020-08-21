@@ -3,6 +3,7 @@ package tourGuide;
 import static org.junit.Assert.assertTrue;
 
 import java.util.*;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.time.StopWatch;
@@ -12,6 +13,8 @@ import org.junit.Test;
 import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rewardCentral.RewardCentral;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.service.RewardsService;
@@ -20,7 +23,7 @@ import tourGuide.user.User;
 import tourGuide.user.UserReward;
 
 public class TestPerformance {
-	
+
 	/*
 	 * A note on performance improvements:
 	 *     
@@ -40,11 +43,13 @@ public class TestPerformance {
      *     highVolumeGetRewards: 100,000 users within 20 minutes:
 	 *          assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 	 */
-	
+	private Logger logger = LoggerFactory.getLogger(TestPerformance.class);
+	static Semaphore semaphore = new Semaphore(1);
 	//@Ignore
 	@Test
 	public void highVolumeTrackLocation() {
 		Locale.setDefault(Locale.US);
+		logger.debug("Start highVolumeTrackLocation");
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		// Users should be incremented up to 100,000, and test finishes within 15 minutes
@@ -64,12 +69,14 @@ public class TestPerformance {
 
 		System.out.println("highVolumeTrackLocation: Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds."); 
 		assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+		logger.debug("End of highVolumeTrackLocation");
 	}
 	
 	//@Ignore
 	@Test
 	public void highVolumeGetRewards() {
 		//Locale.setDefault(Locale.US);
+		logger.debug("Start highVolumeGetRewards");
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 
@@ -91,9 +98,18 @@ public class TestPerformance {
 		//Déplacement stopwatch
 		/*StopWatch stopWatch = new StopWatch();
 		stopWatch.start();*/
+/*		try {
+			semaphore.acquire();*/
 
-	    allUsers.forEach(u -> rewardsService.calculateRewards(u));
-	    
+			allUsers.forEach(u -> rewardsService.calculateRewards(u));
+/*		} catch (InterruptedException e) {
+		e.printStackTrace();
+		} finally {
+			//verrou.unlock();
+			semaphore.release();
+		}*/
+
+
 		for(User user : allUsers) {
 			assertTrue(user.getUserRewards().size() > 0);
 		}
@@ -102,6 +118,7 @@ public class TestPerformance {
 
 		System.out.println("highVolumeGetRewards: Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds."); 
 		assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+		logger.debug("End of highVolumeGetRewards");
 	}
 	
 }

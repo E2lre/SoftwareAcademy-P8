@@ -1,18 +1,24 @@
 package tourGuide.helper;
 
+import org.javamoney.moneta.Money;
 import org.modelmapper.ModelMapper;
 import tourGuide.model.NearestAttraction;
 import tourGuide.model.UserDTO;
+import tourGuide.model.UserPreferenceDTO;
 import tourGuide.user.User;
+import tourGuide.user.UserPreferences;
 
+import javax.money.CurrencyUnit;
+import javax.money.Monetary;
 import java.util.*;
 
 public class Util {
 
+    private int NUMBER_PROXY_ATTACTION = 5;
     /**
      * Convert user to userDTO
      * @param user user to convert
-     * @return user conted to userDTO
+     * @return user converted to userDTO
      */
     public UserDTO convertToDto(User user) {
         ModelMapper modelMapper = new ModelMapper();
@@ -20,6 +26,43 @@ public class Util {
         return userDto;
     }
 
+    /**
+     * Convert UserPreferences to UserPreferenceDTO
+     * @param userPreference userPreference to convert
+     * @return userPreferences converted to userPreferenceDTO
+     */
+    public UserPreferenceDTO convertUserPreferenceToDto(UserPreferences userPreference) {
+
+        UserPreferenceDTO userPreferenceDTO = new UserPreferenceDTO (userPreference.getAttractionProximity(),
+                userPreference.getCurrency().getCurrencyCode(),
+                userPreference.getLowerPricePoint().getNumber().doubleValue(),
+                userPreference.getHighPricePoint().getNumber().doubleValue(),
+                userPreference.getTripDuration(),
+                userPreference.getTicketQuantity(),
+                userPreference.getNumberOfAdults(),
+                userPreference.getNumberOfChildren());
+        return userPreferenceDTO;
+    }
+
+    /**
+     * Convert UserPreferenceDTO to UserPreferences
+     * @param userPreferenceDto userPreferenceDto to convert
+     * @return UserPreferenceDTO converted to UserPreferences
+     */
+    public UserPreferences convertDtoToUserPreference(UserPreferenceDTO userPreferenceDto) {
+         CurrencyUnit currency = Monetary.getCurrency(userPreferenceDto.getCurrency());
+         Money lowerPricePoint = Money.of(userPreferenceDto.getLowerPricePoint(), currency);
+         Money highPricePoint = Money.of(userPreferenceDto.getHighPricePoint(), currency);
+        UserPreferences userPreference  = new UserPreferences(userPreferenceDto.getAttractionProximity(),
+                currency,
+                lowerPricePoint,
+                highPricePoint,
+                userPreferenceDto.getTripDuration(),
+                userPreferenceDto.getTicketQuantity(),
+                userPreferenceDto.getNumberOfAdults(),
+                userPreferenceDto.getNumberOfChildren());
+        return userPreference;
+    }
     /**
      * Identify the 5 proxy attractions
      * @param nearestAttractions list of attraction
@@ -42,7 +85,7 @@ public class Util {
         Set<Map.Entry<Double,NearestAttraction>> entires = mapSort.entrySet();
         int i =0 ;
         for(Map.Entry<Double,NearestAttraction> ent:entires){
-            if (i<5) {
+            if (i<NUMBER_PROXY_ATTACTION) {
                 nearestAttractionListResult.add(ent.getValue());
             } else {
                 break;

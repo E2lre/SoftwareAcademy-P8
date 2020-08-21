@@ -8,73 +8,93 @@ import org.javamoney.moneta.Money;
 
 public class UserPreferences {
 	
-<span class="fc" id="L11">	private int attractionProximity = Integer.MAX_VALUE;</span>
-<span class="fc" id="L12">	private CurrencyUnit currency = Monetary.getCurrency(&quot;USD&quot;);</span>
-<span class="fc" id="L13">	private Money lowerPricePoint = Money.of(0, currency);</span>
-<span class="fc" id="L14">	private Money highPricePoint = Money.of(Integer.MAX_VALUE, currency);</span>
-<span class="fc" id="L15">	private int tripDuration = 1;</span>
-<span class="fc" id="L16">	private int ticketQuantity = 1;</span>
-<span class="fc" id="L17">	private int numberOfAdults = 1;</span>
-<span class="fc" id="L18">	private int numberOfChildren = 0;</span>
+<span class="pc" id="L11">	private int attractionProximity = Integer.MAX_VALUE;</span>
+
+
+<span class="pc" id="L14">	private CurrencyUnit currency = Monetary.getCurrency(&quot;USD&quot;);</span>
+<span class="pc" id="L15">	private Money lowerPricePoint = Money.of(0, currency);</span>
+<span class="pc" id="L16">	private Money highPricePoint = Money.of(Integer.MAX_VALUE, currency);</span>
+<span class="pc" id="L17">	private int tripDuration = 1;</span>
+<span class="pc" id="L18">	private int ticketQuantity = 1;</span>
+<span class="pc" id="L19">	private int numberOfAdults = 1;</span>
+<span class="pc" id="L20">	private int numberOfChildren = 0;</span>
 	
-<span class="fc" id="L20">	public UserPreferences() {</span>
-<span class="fc" id="L21">	}</span>
-	
+<span class="fc" id="L22">	public UserPreferences() {</span>
+<span class="fc" id="L23">	}</span>
+
+<span class="nc" id="L25">	public UserPreferences(int attractionProximity, CurrencyUnit currency, Money lowerPricePoint, Money highPricePoint, int tripDuration, int ticketQuantity, int numberOfAdults, int numberOfChildren) {</span>
+<span class="nc" id="L26">		this.attractionProximity = attractionProximity;</span>
+<span class="nc" id="L27">		this.currency = currency;</span>
+<span class="nc" id="L28">		this.lowerPricePoint = lowerPricePoint;</span>
+<span class="nc" id="L29">		this.highPricePoint = highPricePoint;</span>
+<span class="nc" id="L30">		this.tripDuration = tripDuration;</span>
+<span class="nc" id="L31">		this.ticketQuantity = ticketQuantity;</span>
+<span class="nc" id="L32">		this.numberOfAdults = numberOfAdults;</span>
+<span class="nc" id="L33">		this.numberOfChildren = numberOfChildren;</span>
+<span class="nc" id="L34">	}</span>
 	public void setAttractionProximity(int attractionProximity) {
-<span class="nc" id="L24">		this.attractionProximity = attractionProximity;</span>
-<span class="nc" id="L25">	}</span>
+<span class="nc" id="L36">		this.attractionProximity = attractionProximity;</span>
+<span class="nc" id="L37">	}</span>
 	
 	public int getAttractionProximity() {
-<span class="nc" id="L28">		return attractionProximity;</span>
+<span class="nc" id="L40">		return attractionProximity;</span>
 	}
-	
+
+	public CurrencyUnit getCurrency() {
+<span class="nc" id="L44">		return currency;</span>
+	}
+
+	public void setCurrency(CurrencyUnit currency) {
+<span class="nc" id="L48">		this.currency = currency;</span>
+<span class="nc" id="L49">	}</span>
+
 	public Money getLowerPricePoint() {
-<span class="nc" id="L32">		return lowerPricePoint;</span>
+<span class="nc" id="L52">		return lowerPricePoint;</span>
 	}
 
 	public void setLowerPricePoint(Money lowerPricePoint) {
-<span class="nc" id="L36">		this.lowerPricePoint = lowerPricePoint;</span>
-<span class="nc" id="L37">	}</span>
+<span class="nc" id="L56">		this.lowerPricePoint = lowerPricePoint;</span>
+<span class="nc" id="L57">	}</span>
 
 	public Money getHighPricePoint() {
-<span class="nc" id="L40">		return highPricePoint;</span>
+<span class="nc" id="L60">		return highPricePoint;</span>
 	}
 
 	public void setHighPricePoint(Money highPricePoint) {
-<span class="nc" id="L44">		this.highPricePoint = highPricePoint;</span>
-<span class="nc" id="L45">	}</span>
+<span class="nc" id="L64">		this.highPricePoint = highPricePoint;</span>
+<span class="nc" id="L65">	}</span>
 	
 	public int getTripDuration() {
-<span class="nc" id="L48">		return tripDuration;</span>
+<span class="nc" id="L68">		return tripDuration;</span>
 	}
 
 	public void setTripDuration(int tripDuration) {
-<span class="nc" id="L52">		this.tripDuration = tripDuration;</span>
-<span class="nc" id="L53">	}</span>
+<span class="nc" id="L72">		this.tripDuration = tripDuration;</span>
+<span class="nc" id="L73">	}</span>
 
 	public int getTicketQuantity() {
-<span class="nc" id="L56">		return ticketQuantity;</span>
+<span class="nc" id="L76">		return ticketQuantity;</span>
 	}
 
 	public void setTicketQuantity(int ticketQuantity) {
-<span class="nc" id="L60">		this.ticketQuantity = ticketQuantity;</span>
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L80">		this.ticketQuantity = ticketQuantity;</span>
+<span class="nc" id="L81">	}</span>
 	
 	public int getNumberOfAdults() {
-<span class="nc" id="L64">		return numberOfAdults;</span>
+<span class="nc" id="L84">		return numberOfAdults;</span>
 	}
 
 	public void setNumberOfAdults(int numberOfAdults) {
-<span class="nc" id="L68">		this.numberOfAdults = numberOfAdults;</span>
-<span class="nc" id="L69">	}</span>
+<span class="nc" id="L88">		this.numberOfAdults = numberOfAdults;</span>
+<span class="nc" id="L89">	}</span>
 
 	public int getNumberOfChildren() {
-<span class="nc" id="L72">		return numberOfChildren;</span>
+<span class="nc" id="L92">		return numberOfChildren;</span>
 	}
 
 	public void setNumberOfChildren(int numberOfChildren) {
-<span class="nc" id="L76">		this.numberOfChildren = numberOfChildren;</span>
-<span class="nc" id="L77">	}</span>
+<span class="nc" id="L96">		this.numberOfChildren = numberOfChildren;</span>
+<span class="nc" id="L97">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>
