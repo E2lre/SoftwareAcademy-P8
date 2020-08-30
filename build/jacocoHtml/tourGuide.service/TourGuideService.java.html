@@ -54,7 +54,7 @@ public class TourGuideService {
 <span class="fc" id="L54">	}</span>
 	
 	public List&lt;UserReward&gt; getUserRewards(User user) {
-<span class="fc" id="L57">		return user.getUserRewards();</span>
+<span class="nc" id="L57">		return user.getUserRewards();</span>
 	}
 	
 	public VisitedLocation getUserLocation(User user) {
@@ -188,7 +188,7 @@ public class TourGuideService {
 	public UserPreferenceDTO setUserPreference(String userName, UserPreferenceDTO userPreference){
 <span class="nc" id="L189">		UserPreferences userPreferenceResult = null;</span>
 <span class="nc" id="L190">		User curentUser = getUser(userName);</span>
-		//TODO ajouter les controles sur les prÃ©fÃ©rences entrantes
+
 <span class="nc" id="L192">		UserPreferences curentUserPreference = curentUser.getUserPreferences();</span>
 <span class="nc" id="L193">		Util util = new Util();</span>
 <span class="nc" id="L194">		curentUser.setUserPreferences(util.convertDtoToUserPreference(userPreference));</span>

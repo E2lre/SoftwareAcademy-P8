@@ -3,12 +3,17 @@
 import java.util.List;
 
 import gpsUtil.location.Attraction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import com.jsoniter.output.JsonStream;
 
 import gpsUtil.location.VisitedLocation;
+import tourGuide.exceptions.UserNameNotFoundException;
+import tourGuide.exceptions.UserPreferenceEmptyException;
 import tourGuide.model.NearestAttractionsForUser;
 import tourGuide.model.UserCurentLocation;
 import tourGuide.model.UserPreferenceDTO;
@@ -18,20 +23,22 @@ import tourGuide.user.UserPreferences;
 import tripPricer.Provider;
 
 @RestController
-<span class="nc" id="L21">public class TourGuideController {</span>
+<span class="nc" id="L26">public class TourGuideController {</span>
 
-	@Autowired
+<span class="nc" id="L28">    private Logger logger = LoggerFactory.getLogger(TourGuideController.class);</span>
+
+    @Autowired
 	TourGuideService tourGuideService;
 	
     @RequestMapping(&quot;/&quot;)
     public String index() {
-<span class="nc" id="L28">        return &quot;Greetings from TourGuide!&quot;;</span>
+<span class="nc" id="L35">        return &quot;Greetings from TourGuide!&quot;;</span>
     }
     
     @RequestMapping(&quot;/getLocation&quot;) 
     public String getLocation(@RequestParam String userName) {
-<span class="nc" id="L33">    	VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));</span>
-<span class="nc" id="L34">		return JsonStream.serialize(visitedLocation.location);</span>
+<span class="nc" id="L40">    	VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));</span>
+<span class="nc" id="L41">		return JsonStream.serialize(visitedLocation.location);</span>
     }
     
     //  TODO: Change this method to no longer return a List of Attractions.==&gt; Done
@@ -53,17 +60,17 @@ import tripPricer.Provider;
     public NearestAttractionsForUser getNearbyAttractionsV2(@RequestParam String userName) {
         NearestAttractionsForUser nearestAttractionsForUserResult;
 
-<span class="nc" id="L56">        User user = getUser(userName);</span>
-<span class="nc" id="L57">        VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));</span>
-<span class="nc" id="L58">        nearestAttractionsForUserResult = tourGuideService.getNearByAttractionsForUSer(user, visitedLocation);</span>
+<span class="nc" id="L63">        User user = getUser(userName);</span>
+<span class="nc" id="L64">        VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));</span>
+<span class="nc" id="L65">        nearestAttractionsForUserResult = tourGuideService.getNearByAttractionsForUSer(user, visitedLocation);</span>
 
-<span class="nc" id="L60">        return nearestAttractionsForUserResult;</span>
+<span class="nc" id="L67">        return nearestAttractionsForUserResult;</span>
 
     }
     
     @RequestMapping(&quot;/getRewards&quot;) 
     public String getRewards(@RequestParam String userName) {
-<span class="nc" id="L66">    	return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));</span>
+<span class="nc" id="L73">    	return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));</span>
     }
     
     @RequestMapping(&quot;/getAllCurrentLocations&quot;)
@@ -79,32 +86,49 @@ import tripPricer.Provider;
     	//        ...
     	//     }
     	
-<span class="nc" id="L82">    	return tourGuideService.getAllCurrentLocations();</span>
+<span class="nc" id="L89">    	return tourGuideService.getAllCurrentLocations();</span>
     }
     
     @RequestMapping(&quot;/getTripDeals&quot;)
  //   public String getTripDeals(@RequestParam String userName) {
     public List&lt;Provider&gt; getTripDeals(@RequestParam String userName) {
-<span class="nc" id="L88">        List&lt;Provider&gt; providers = tourGuideService.getTripDeals(getUser(userName));</span>
+<span class="nc" id="L95">        List&lt;Provider&gt; providers = tourGuideService.getTripDeals(getUser(userName));</span>
     	//return JsonStream.serialize(providers);
-<span class="nc" id="L90">        return providers ;</span>
+<span class="nc" id="L97">        return providers ;</span>
     }
 
     @RequestMapping(&quot;/getUserPreference&quot;)
-    public UserPreferenceDTO getUserPreference(@RequestParam String userName) {
-//TODO gÃ©rer les erreurs sur le userName
-<span class="nc" id="L96">        return tourGuideService.getUserPreference (userName);</span>
+    @ResponseStatus(HttpStatus.OK)
+    public UserPreferenceDTO getUserPreference(@RequestParam String userName) throws UserNameNotFoundException {
+
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        if (tourGuideService.getUser(userName) == null ) {</span>
+<span class="nc" id="L105">            String message = &quot; this username does not exist : &quot;+ userName;</span>
+<span class="nc" id="L106">            logger.error(message);</span>
+<span class="nc" id="L107">            throw new UserNameNotFoundException(message);</span>
+        }
+<span class="nc" id="L109">        return tourGuideService.getUserPreference (userName);</span>
 
     }
 
     @PostMapping(&quot;/setUserPreference&quot;)
-    public UserPreferenceDTO setUserPreference(@RequestParam String userName, @RequestBody UserPreferenceDTO userPreference) {
-        //TODO gÃ©rer les erreurs sur le userName
-<span class="nc" id="L103">        return tourGuideService.setUserPreference(userName,userPreference);</span>
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public UserPreferenceDTO setUserPreference(@RequestParam String userName, @RequestBody UserPreferenceDTO userPreference) throws UserNameNotFoundException, UserPreferenceEmptyException {
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        if (tourGuideService.getUser(userName) == null ) {</span>
+<span class="nc" id="L117">            String message = &quot; this username does not exist : &quot;+ userName;</span>
+<span class="nc" id="L118">            logger.error(message);</span>
+<span class="nc" id="L119">            throw new UserNameNotFoundException(message);</span>
+        }
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        if (userPreference == null ) {</span>
+<span class="nc" id="L122">            String message = &quot; userPreference is empty  &quot;;</span>
+<span class="nc" id="L123">            logger.error(message);</span>
+<span class="nc" id="L124">            throw new UserPreferenceEmptyException(message);</span>
+        }
+
+<span class="nc" id="L127">        return tourGuideService.setUserPreference(userName,userPreference);</span>
     }
 
     private User getUser(String userName) {
-<span class="nc" id="L107">    	return tourGuideService.getUser(userName);</span>
+<span class="nc" id="L131">    	return tourGuideService.getUser(userName);</span>
     }
    
 

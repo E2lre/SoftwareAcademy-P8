@@ -12,6 +12,7 @@ import tourGuide.user.User;
 import tourGuide.user.UserReward;
 
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -47,14 +48,15 @@ public class RewardsService  {
 	
 //	public synchronized void calculateRewards(User user) { //TODO A retirer
 		public  void calculateRewards(User user) {
-/*		Lock verrou = new ReentrantLock();
-		verrou.lock();*/
-		//logger.debug("Start calculateRewards");
-/*		try {
-			semaphore.acquire();
-			logger.debug("semaphore on calculateRewards");*/
-		 List<VisitedLocation> userLocations = user.getVisitedLocations();
+//E2LRE August 2020 :Correction to avoid ConcurrentModificationException in TestPerform
+/*		 List<VisitedLocation> userLocations = user.getVisitedLocations();
 		 List<Attraction> attractions = gpsUtil.getAttractions();
+*/
+			CopyOnWriteArrayList<VisitedLocation> userLocations = new CopyOnWriteArrayList<>();
+			userLocations.addAll(user.getVisitedLocations());
+
+			CopyOnWriteArrayList<Attraction> attractions = new CopyOnWriteArrayList<>();
+			attractions.addAll(gpsUtil.getAttractions());
 
 
 				for (VisitedLocation visitedLocation : userLocations) {
@@ -66,14 +68,6 @@ public class RewardsService  {
 						}
 					}
 				}
-/*		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} finally {
-				//verrou.unlock();
-			semaphore.release();
-		//	logger.debug("semaphore off calculateRewards");
-		}*/
-
 		//logger.debug("End of calculateRewards");
 	}
 	
