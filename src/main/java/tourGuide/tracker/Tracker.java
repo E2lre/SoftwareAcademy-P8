@@ -1,6 +1,7 @@
 package tourGuide.tracker;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -21,8 +22,22 @@ public class Tracker extends Thread {
 
 	public Tracker(TourGuideService tourGuideService) {
 		this.tourGuideService = tourGuideService;
-		
 		executorService.submit(this);
+
+/*
+		CompletableFuture<String> completableFuture
+				= new CompletableFuture<>();
+		executorService.submit(completableFuture.supplyAsync(this));
+*/
+		logger.debug("tracker submit");
+		//TODO EDE : ajouter un log avec
+		/*Future<String> future = executorService.submit(callableTask);
+String result = null;
+try {
+    result = future.get();
+} catch (InterruptedException | ExecutionException e) {
+    e.printStackTrace();
+}*/
 	}
 	
 	/**
@@ -52,6 +67,7 @@ public class Tracker extends Thread {
 			try {
 				logger.debug("Tracker sleeping");
 				TimeUnit.SECONDS.sleep(trackingPollingInterval);
+				logger.debug("Tracker END of sleeping"); //TODO EDE a retirer
 			} catch (InterruptedException e) {
 				break;
 			}

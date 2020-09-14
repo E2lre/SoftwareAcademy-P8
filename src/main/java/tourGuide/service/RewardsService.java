@@ -12,8 +12,7 @@ import tourGuide.user.User;
 import tourGuide.user.UserReward;
 
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.Semaphore;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -24,6 +23,10 @@ public class RewardsService  {
     private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
 
 	static Semaphore semaphore = new Semaphore(1);
+
+	//ADD EDE
+	private ExecutorService executor
+			= Executors.newSingleThreadExecutor();
 
 	private Logger logger = LoggerFactory.getLogger(RewardsService.class);
 	// proximity in miles
@@ -58,16 +61,19 @@ public class RewardsService  {
 			CopyOnWriteArrayList<Attraction> attractions = new CopyOnWriteArrayList<>();
 			attractions.addAll(gpsUtil.getAttractions());
 
-
-				for (VisitedLocation visitedLocation : userLocations) {
-					for (Attraction attraction : attractions) {
-						if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
+				//userLocations.parallelStream().forEach(visitedLocation -> rewardsService.calculateRewards(u));
+				//for (VisitedLocation visitedLocation : userLocations) {
+				userLocations.parallelStream().forEach(visitedLocation -> {
+					//for (Attraction attraction : attractions) {
+						attractions.parallelStream().forEach(attraction -> {
+						//if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) { //TODO voir efficacité du parallel ==>0
+						if (user.getUserRewards().parallelStream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
 							if (nearAttraction(visitedLocation, attraction)) {
 								user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
 							}
 						}
-					}
-				}
+					});
+				});
 		//logger.debug("End of calculateRewards");
 	}
 	
@@ -81,6 +87,18 @@ public class RewardsService  {
 
 	public int getRewardPoints(Attraction attraction, User user) {
 		return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
+/*		Future<Integer> points =  executor.submit(() -> {
+				 return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
+				});
+		int result = points.;
+		return points;*/
+	}
+
+	//add by EDE
+	private Future<Integer> calculateRewardPoints(Attraction attraction, User user) {
+		return executor.submit(() -> {
+			return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
+		});
 	}
 	
 	public double getDistance(Location loc1, Location loc2) {

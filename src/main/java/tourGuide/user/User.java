@@ -72,7 +72,9 @@ public class User {
 	public void addUserReward(UserReward userReward) {
 		//EDE august 2020 bug fix
 		//if(userRewards.stream().filter(r -> !r.attraction.attractionName.equals(userReward.attraction)).count() == 0) {
-		if(userRewards.stream().filter(r -> r.attraction.attractionName.equals(userReward.attraction)).count() == 0) {
+		//EDE September 2020 pour essayer d'améliorer les perf, passage en //stream
+		//if(userRewards.stream().filter(r -> r.attraction.attractionName.equals(userReward.attraction)).count() == 0) {
+		if(userRewards.parallelStream().filter(r -> r.attraction.attractionName.equals(userReward.attraction)).count() == 0) {
 			userRewards.add(userReward);
 		}
 	}

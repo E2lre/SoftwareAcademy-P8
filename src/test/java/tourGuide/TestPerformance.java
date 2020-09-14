@@ -61,9 +61,12 @@ public class TestPerformance {
 		
 	    StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		for(User user : allUsers) {
+
+		/*for(User user : allUsers) {
 			tourGuideService.trackUserLocation(user);
-		}
+		}*/
+		allUsers.parallelStream().forEach(u -> tourGuideService.trackUserLocation(u));
+
 		stopWatch.stop();
 		tourGuideService.tracker.stopTracking();
 
@@ -94,6 +97,8 @@ public class TestPerformance {
 
 
 		allUsers.forEach(u -> u.addToVisitedLocations(new VisitedLocation(u.getUserId(), attraction, new Date())));
+		//allUsers.parallelStream().forEach(u -> u.addToVisitedLocations(new VisitedLocation(u.getUserId(), attraction, new Date())));
+
 
 		//Déplacement stopwatch
 		/*StopWatch stopWatch = new StopWatch();
@@ -101,7 +106,8 @@ public class TestPerformance {
 /*		try {
 			semaphore.acquire();*/
 
-			allUsers.forEach(u -> rewardsService.calculateRewards(u));
+			//allUsers.forEach(u -> rewardsService.calculateRewards(u));
+			allUsers.parallelStream().forEach(u -> rewardsService.calculateRewards(u));
 /*		} catch (InterruptedException e) {
 		e.printStackTrace();
 		} finally {

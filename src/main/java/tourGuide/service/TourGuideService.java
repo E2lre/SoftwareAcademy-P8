@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -58,9 +59,11 @@ public class TourGuideService {
 	}
 	
 	public VisitedLocation getUserLocation(User user) {
+		logger.debug("getUserLocation Start");
 		VisitedLocation visitedLocation = (user.getVisitedLocations().size() > 0) ?
 			user.getLastVisitedLocation() :
 			trackUserLocation(user);
+		logger.debug("getUserLocation End");
 		return visitedLocation;
 	}
 
@@ -150,20 +153,51 @@ public class TourGuideService {
 		UserDTO userDto = util.convertToDto(user);
 
 		//userDto = util.convertToDto(user);
+		logger.debug("start test");
 
-		for(Attraction attraction : gpsUtil.getAttractions()) {
+
+
+//TODO : Transformer en stream et lambda
+					List<Attraction> attractionListLambda = gpsUtil.getAttractions().parallelStream().collect(Collectors.toList());
+					logger.debug("fin lambda");
+					//users.forEach(u -> tourGuideService.trackUserLocation(u));
+		//Forçage à 8 stream au lieu des 4 par défaut liés auc 4 coeur de la machine
+//		ForkJoinPool myPool = new ForkJoinPool(8);
+//		myPool.submit(() -> {
+					attractionListLambda.parallelStream().forEach(attractionLb -> {
+						logger.debug("	start loop");
+						Location locationAttraction = new Location(attractionLb.latitude, attractionLb.longitude);
+						logger.debug("		fin Location");
+						NearestAttraction nearestAttraction = new NearestAttraction(attractionLb, rewardsService.getDistance(locationAttraction, userDto.getLastVisitedLocation().location), rewardsService.getRewardPoints(attractionLb, user));
+						logger.debug("		fin nearestAttraction");
+						//GetREward had bad performance. th reward will be call only for the 5 destination, not for all
+						//NearestAttraction nearestAttraction = new NearestAttraction(attraction,rewardsService.getDistance(locationAttraction, userDto.getLastVisitedLocation().location),0);
+						nearestAttractions.add(nearestAttraction);
+						logger.debug("	End loop");
+					});
+
+
+//				}).get();
+		/*
+		for(Attraction attraction : attractionListLambda) {
+		//for(Attraction attraction : gpsUtil.getAttractions()) {
+			logger.debug("	start loop");
 			Location locationAttraction = new Location(attraction.latitude,attraction.longitude);
+			logger.debug("		fin Location");
 			NearestAttraction nearestAttraction = new NearestAttraction(attraction,rewardsService.getDistance(locationAttraction, userDto.getLastVisitedLocation().location),rewardsService.getRewardPoints(attraction,user));
+			logger.debug("		fin nearestAttraction");
 			//GetREward had bad performance. th reward will be call only for the 5 destination, not for all
 			//NearestAttraction nearestAttraction = new NearestAttraction(attraction,rewardsService.getDistance(locationAttraction, userDto.getLastVisitedLocation().location),0);
 			nearestAttractions.add(nearestAttraction);
-		}
+			logger.debug("	End loop");
+		} */
+		logger.debug("end count");
 		nearestAttractionList = util.selectFiveProxyAttraction(nearestAttractions);
 
-
+		logger.debug("end 5");
 		//NearestAttractionsForUser nearestAttractionsForUserResult = new NearestAttractionsForUser(userDto.convertToDto(user),nearestAttractionList);
 		NearestAttractionsForUser nearestAttractionsForUserResult = new NearestAttractionsForUser(userDto,nearestAttractionList);
-
+		logger.debug("end test");
 		return nearestAttractionsForUserResult;
 	}
 
