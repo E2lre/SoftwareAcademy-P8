@@ -49,7 +49,7 @@ public class RewardsService  {
 		proximityBuffer = defaultProximityBuffer;
 	}
 	
-//	public synchronized void calculateRewards(User user) { //TODO A retirer
+
 		public  void calculateRewards(User user) {
 //E2LRE August 2020 :Correction to avoid ConcurrentModificationException in TestPerform
 /*		 List<VisitedLocation> userLocations = user.getVisitedLocations();
@@ -61,22 +61,108 @@ public class RewardsService  {
 			CopyOnWriteArrayList<Attraction> attractions = new CopyOnWriteArrayList<>();
 			attractions.addAll(gpsUtil.getAttractions());
 
+			/****** Mise en place de Executor Services ****************/
+			//ExecutorService executor = Executors.newFixedThreadPool(1000);
+
 				//userLocations.parallelStream().forEach(visitedLocation -> rewardsService.calculateRewards(u));
 				//for (VisitedLocation visitedLocation : userLocations) {
-				userLocations.parallelStream().forEach(visitedLocation -> {
-					//for (Attraction attraction : attractions) {
-						attractions.parallelStream().forEach(attraction -> {
-						//if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) { //TODO voir efficacité du parallel ==>0
-						if (user.getUserRewards().parallelStream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
+				//userLocations.parallelStream().forEach(visitedLocation -> {
+				userLocations.stream().forEach(visitedLocation -> {
+				//for (Attraction attraction : attractions) {
+						//attractions.parallelStream().forEach(attraction -> {
+						attractions.stream().forEach(attraction -> {
+						if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) { //TODO voir efficacité du parallel ==>0
+						//if (user.getUserRewards().parallelStream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
 							if (nearAttraction(visitedLocation, attraction)) {
+							//Ajout de l'async
+
 								user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
+//								Runnable runnableTask = () -> {
+//									user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
+//									//logger.debug("run--------------------------"+cpt+ " "+ user.getUserName());
+//								};
+								//logger.debug("exec ");
+//								executor.execute(runnableTask);
+
 							}
 						}
 					});
 				});
+
+//			logger.debug("shutdown");
+//			executor.shutdown();
+//
+//			try {
+//				//if (!executor.awaitTermination(800, TimeUnit.MILLISECONDS)) {
+//				if (!executor.awaitTermination(1, TimeUnit.MINUTES)) { //15 minutes est notre objectif
+//					logger.debug("************* end now REward********************");
+//					executor.shutdownNow();
+//				}
+//			} catch (InterruptedException e) {
+//				logger.debug("************* end now catch REward *************");
+//				executor.shutdownNow();
+//			}
+//			logger.debug("end");
+			/****** fin de Mise en place de Executor Services ****************/
 		//logger.debug("End of calculateRewards");
 	}
-	
+
+	public  void calculateRewards_New(User user) {
+//E2LRE August 2020 :Correction to avoid ConcurrentModificationException in TestPerform
+/*		 List<VisitedLocation> userLocations = user.getVisitedLocations();
+		 List<Attraction> attractions = gpsUtil.getAttractions();
+*/
+		CopyOnWriteArrayList<VisitedLocation> userLocations = new CopyOnWriteArrayList<>();
+		userLocations.addAll(user.getVisitedLocations());
+
+		CopyOnWriteArrayList<Attraction> attractions = new CopyOnWriteArrayList<>();
+		attractions.addAll(gpsUtil.getAttractions());
+
+		/****** Mise en place de Executor Services ****************/
+		ExecutorService executor = Executors.newFixedThreadPool(1000);
+
+		//userLocations.parallelStream().forEach(visitedLocation -> rewardsService.calculateRewards(u));
+		//for (VisitedLocation visitedLocation : userLocations) {
+		//userLocations.parallelStream().forEach(visitedLocation -> {
+		userLocations.stream().forEach(visitedLocation -> {
+			//for (Attraction attraction : attractions) {
+			//attractions.parallelStream().forEach(attraction -> {
+			attractions.stream().forEach(attraction -> {
+				if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) { //TODO voir efficacité du parallel ==>0
+					//if (user.getUserRewards().parallelStream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
+					if (nearAttraction(visitedLocation, attraction)) {
+						//Ajout de l'async
+
+//						user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
+								Runnable runnableTask = () -> {
+									user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
+									//logger.debug("run--------------------------"+cpt+ " "+ user.getUserName());
+								};
+						//logger.debug("exec ");
+								executor.execute(runnableTask);
+
+					}
+				}
+			});
+		});
+
+			logger.debug("shutdown");
+			executor.shutdown();
+
+			try {
+				//if (!executor.awaitTermination(800, TimeUnit.MILLISECONDS)) {
+				if (!executor.awaitTermination(1, TimeUnit.MINUTES)) { //15 minutes est notre objectif
+					logger.debug("************* end now REward********************");
+					executor.shutdownNow();
+				}
+			} catch (InterruptedException e) {
+				logger.debug("************* end now catch REward *************");
+				executor.shutdownNow();
+			}
+			logger.debug("end");
+		/****** fin de Mise en place de Executor Services ****************/
+		//logger.debug("End of calculateRewards");
+	}
 	public boolean isWithinAttractionProximity(Attraction attraction, Location location) {
 		return getDistance(attraction, location) > attractionProximityRange ? false : true;
 	}

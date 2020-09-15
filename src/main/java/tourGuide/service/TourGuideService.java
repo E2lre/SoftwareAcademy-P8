@@ -101,6 +101,7 @@ public class TourGuideService {
 
 	//EDE August 2020 : modification to check price with preference
 	public List<Provider> getTripDeals(User user) {
+
 		int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
 		List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(), 
 				user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(), cumulatativeRewardPoints);
@@ -120,9 +121,11 @@ public class TourGuideService {
 	}
 	
 	public VisitedLocation trackUserLocation(User user) {
+		//logger.debug("trackUserLocation start" + user.getUserName());
 		VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
 		user.addToVisitedLocations(visitedLocation);
 		rewardsService.calculateRewards(user);
+		//logger.debug("trackUserLocation end"+ user.getUserName());
 		return visitedLocation;
 	}
 /* retreive by EDE*/
@@ -161,9 +164,6 @@ public class TourGuideService {
 					List<Attraction> attractionListLambda = gpsUtil.getAttractions().parallelStream().collect(Collectors.toList());
 					logger.debug("fin lambda");
 					//users.forEach(u -> tourGuideService.trackUserLocation(u));
-		//Forçage à 8 stream au lieu des 4 par défaut liés auc 4 coeur de la machine
-//		ForkJoinPool myPool = new ForkJoinPool(8);
-//		myPool.submit(() -> {
 					attractionListLambda.parallelStream().forEach(attractionLb -> {
 						logger.debug("	start loop");
 						Location locationAttraction = new Location(attractionLb.latitude, attractionLb.longitude);

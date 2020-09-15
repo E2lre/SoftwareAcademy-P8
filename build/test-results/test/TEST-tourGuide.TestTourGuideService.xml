@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tourGuide.TestTourGuideService" tests="7" skipped="0" failures="0" errors="0" timestamp="2020-09-15T16:15:31" hostname="UC715467VW7JAV" time="5.495">
+  <properties/>
+  <testcase name="getUserLocation" classname="tourGuide.TestTourGuideService" time="0.067"/>
+  <testcase name="addUser" classname="tourGuide.TestTourGuideService" time="0.002"/>
+  <testcase name="getTripDeals" classname="tourGuide.TestTourGuideService" time="0.052"/>
+  <testcase name="getAllUsers" classname="tourGuide.TestTourGuideService" time="0.003"/>
+  <testcase name="getAllCurrentLocations" classname="tourGuide.TestTourGuideService" time="0.078"/>
+  <testcase name="trackUser" classname="tourGuide.TestTourGuideService" time="0.089"/>
+  <testcase name="getNearbyAttractions" classname="tourGuide.TestTourGuideService" time="5.2"/>
+  <system-out><![CDATA[18:15:31.585 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+18:15:31.585 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+18:15:31.587 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+18:15:31.587 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+18:15:31.588 [Test worker] DEBUG tourGuide.tracker.Tracker - tracker submit
+18:15:31.590 [pool-13-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+18:15:31.591 [pool-13-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+18:15:31.591 [pool-13-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+18:15:31.664 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+18:15:31.665 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+18:15:31.665 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+18:15:31.665 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+18:15:31.666 [Test worker] DEBUG tourGuide.tracker.Tracker - tracker submit
+18:15:31.668 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+18:15:31.668 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+18:15:31.668 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+18:15:31.668 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+18:15:31.672 [Test worker] DEBUG tourGuide.tracker.Tracker - tracker submit
+18:15:31.672 [pool-15-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker stopping
+18:15:31.673 [pool-17-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+18:15:31.673 [pool-17-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+18:15:31.673 [pool-17-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+18:15:31.725 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+18:15:31.725 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+18:15:31.725 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+18:15:31.727 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+18:15:31.729 [Test worker] DEBUG tourGuide.tracker.Tracker - tracker submit
+18:15:31.729 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+18:15:31.729 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+18:15:31.730 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+18:15:31.731 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+18:15:31.731 [Test worker] DEBUG tourGuide.tracker.Tracker - tracker submit
+18:15:31.732 [pool-21-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 1 users.
+18:15:31.737 [pool-19-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker stopping
+18:15:31.817 [pool-21-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+18:15:31.817 [pool-21-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+18:15:31.823 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+18:15:31.824 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+18:15:31.824 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+18:15:31.825 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+18:15:31.825 [Test worker] DEBUG tourGuide.tracker.Tracker - tracker submit
+18:15:31.840 [pool-23-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+18:15:31.840 [pool-23-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+18:15:31.840 [pool-23-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+18:15:31.930 [Test worker] INFO tourGuide.service.TourGuideService - TestMode enabled
+18:15:31.930 [Test worker] DEBUG tourGuide.service.TourGuideService - Initializing users
+18:15:31.930 [Test worker] DEBUG tourGuide.service.TourGuideService - Created 0 internal test users.
+18:15:31.930 [Test worker] DEBUG tourGuide.service.TourGuideService - Finished initializing users
+18:15:31.931 [Test worker] DEBUG tourGuide.tracker.Tracker - tracker submit
+18:15:31.931 [pool-25-thread-1] DEBUG tourGuide.tracker.Tracker - Begin Tracker. Tracking 0 users.
+18:15:31.932 [pool-25-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker Time Elapsed: 0 seconds.
+18:15:31.932 [pool-25-thread-1] DEBUG tourGuide.tracker.Tracker - Tracker sleeping
+18:15:32.977 [Test worker] DEBUG tourGuide.service.TourGuideService - start test
+18:15:32.996 [Test worker] DEBUG tourGuide.service.TourGuideService - fin lambda
+18:15:32.996 [Test worker] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:32.996 [Test worker] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:32.996 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:32.996 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:32.996 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:32.996 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:32.996 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:32.996 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:33.237 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:33.237 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:33.237 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:33.237 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:33.561 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:33.561 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:33.561 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:33.561 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:33.733 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:33.733 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:33.733 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:33.733 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:33.752 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:33.752 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:33.752 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:33.752 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:34.162 [Test worker] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:34.162 [Test worker] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:34.162 [Test worker] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:34.162 [Test worker] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:34.252 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:34.252 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:34.252 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:34.252 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:34.360 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:34.360 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:34.360 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:34.360 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:34.597 [Test worker] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:34.597 [Test worker] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:34.597 [Test worker] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:34.597 [Test worker] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:34.715 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:34.716 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:34.716 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:34.716 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:34.776 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:34.776 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:34.776 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:34.776 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:34.827 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:34.827 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:34.827 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:34.827 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:34.842 [Test worker] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:34.842 [Test worker] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:34.842 [Test worker] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:34.843 [Test worker] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:35.070 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:35.070 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:35.070 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:35.070 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:35.070 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:35.070 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:35.070 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:35.070 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:35.259 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:35.259 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:35.259 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:35.259 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:35.397 [Test worker] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:35.397 [Test worker] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:35.397 [Test worker] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:35.398 [Test worker] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:35.814 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:35.814 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:35.814 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:35.814 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:35.829 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:35.829 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:35.829 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:35.829 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:35.852 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:35.852 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:35.852 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:35.852 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:35.889 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:35.890 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:35.890 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:35.890 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:36.388 [Test worker] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:36.388 [Test worker] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:36.388 [Test worker] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:36.388 [Test worker] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:36.421 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:36.422 [ForkJoinPool.commonPool-worker-1] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:36.449 [Test worker] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:36.450 [Test worker] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:36.564 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:36.564 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:36.564 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	start loop
+18:15:36.564 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin Location
+18:15:36.766 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:36.766 [ForkJoinPool.commonPool-worker-2] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:37.061 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 		fin nearestAttraction
+18:15:37.061 [ForkJoinPool.commonPool-worker-3] DEBUG tourGuide.service.TourGuideService - 	End loop
+18:15:37.061 [Test worker] DEBUG tourGuide.service.TourGuideService - end count
+18:15:37.063 [Test worker] DEBUG tourGuide.service.TourGuideService - end 5
+18:15:37.064 [Test worker] DEBUG tourGuide.service.TourGuideService - end test
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
