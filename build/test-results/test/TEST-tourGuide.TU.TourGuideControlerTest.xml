@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="tourGuide.TU.TourGuideControlerTest" tests="1" skipped="1" failures="0" errors="0" timestamp="2020-09-15T16:15:37" hostname="UC715467VW7JAV" time="0.0">
-  <properties/>
-  <testcase name="getUserPreference_existingUserName_UserPreferenceIsDone" classname="tourGuide.TU.TourGuideControlerTest" time="0.0">
-    <skipped/>
-  </testcase>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

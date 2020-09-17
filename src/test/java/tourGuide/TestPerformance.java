@@ -53,7 +53,7 @@ public class TestPerformance {
 		GpsUtil gpsUtil = new GpsUtil();
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 		// Users should be incremented up to 100,000, and test finishes within 15 minutes
-		InternalTestHelper.setInternalUserNumber(100000);
+		InternalTestHelper.setInternalUserNumber(100);
 		TourGuideService tourGuideService = new TourGuideService(gpsUtil, rewardsService);
 
 		List<User> allUsers = new ArrayList<>();
@@ -118,7 +118,7 @@ public class TestPerformance {
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 
 		// Users should be incremented up to 100,000, and test finishes within 20 minutes
-		InternalTestHelper.setInternalUserNumber(100000);
+		InternalTestHelper.setInternalUserNumber(10);
 //position historique des stopWatch ci dessous
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
@@ -185,7 +185,7 @@ public class TestPerformance {
 		logger.debug("End of highVolumeGetRewards");
 	}
 
-//	@Test
+	@Test
 	public void highVolumeGetRewards_OLD() {
 		//Locale.setDefault(Locale.US);
 		logger.debug("Start highVolumeGetRewards");
@@ -193,7 +193,7 @@ public class TestPerformance {
 		RewardsService rewardsService = new RewardsService(gpsUtil, new RewardCentral());
 
 		// Users should be incremented up to 100,000, and test finishes within 20 minutes
-		InternalTestHelper.setInternalUserNumber(100);
+		InternalTestHelper.setInternalUserNumber(10);
 //position historique des stopWatch ci dessous
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
@@ -216,7 +216,8 @@ public class TestPerformance {
 		for(User user : allUsers) {
 
 				user.addToVisitedLocations(new VisitedLocation(user.getUserId(), attraction, new Date()));// AJouté du déébut
-				rewardsService.calculateRewards_New(user);
+				//rewardsService.calculateRewards_New(user);
+				rewardsService.calculateRewards(user);
 				assertTrue(user.getUserRewards().size() > 0); // AJouté de la fin
 
 

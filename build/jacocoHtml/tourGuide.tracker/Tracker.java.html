@@ -52,27 +52,77 @@ try {
 	public void run() {
 <span class="fc" id="L53">		StopWatch stopWatch = new StopWatch();</span>
 		while(true) {
-<span class="pc bpc" id="L55" title="1 of 4 branches missed.">			if(Thread.currentThread().isInterrupted() || stop) {</span>
-<span class="fc" id="L56">				logger.debug(&quot;Tracker stopping&quot;);</span>
-<span class="fc" id="L57">				break;</span>
+<span class="pc bpc" id="L55" title="2 of 4 branches missed.">			if(Thread.currentThread().isInterrupted() || stop) {</span>
+<span class="nc" id="L56">				logger.debug(&quot;Tracker stopping&quot;);</span>
+<span class="nc" id="L57">				break;</span>
 			}
 			
 <span class="fc" id="L60">			List&lt;User&gt; users = tourGuideService.getAllUsers();</span>
 <span class="fc" id="L61">			logger.debug(&quot;Begin Tracker. Tracking &quot; + users.size() + &quot; users.&quot;);</span>
 <span class="fc" id="L62">			stopWatch.start();</span>
-<span class="fc" id="L63">			users.forEach(u -&gt; tourGuideService.trackUserLocation(u));</span>
-<span class="fc" id="L64">			stopWatch.stop();</span>
-<span class="fc" id="L65">			logger.debug(&quot;Tracker Time Elapsed: &quot; + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + &quot; seconds.&quot;); </span>
-<span class="fc" id="L66">			stopWatch.reset();</span>
+<span class="nc" id="L63">			users.forEach(u -&gt; tourGuideService.trackUserLocation(u));</span>
+<span class="nc" id="L64">			stopWatch.stop();</span>
+<span class="nc" id="L65">			logger.debug(&quot;Tracker Time Elapsed: &quot; + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + &quot; seconds.&quot;); </span>
+<span class="nc" id="L66">			stopWatch.reset();</span>
 			try {
-<span class="fc" id="L68">				logger.debug(&quot;Tracker sleeping&quot;);</span>
+<span class="nc" id="L68">				logger.debug(&quot;Tracker sleeping&quot;);</span>
 <span class="nc" id="L69">				TimeUnit.SECONDS.sleep(trackingPollingInterval);</span>
 <span class="nc" id="L70">				logger.debug(&quot;Tracker END of sleeping&quot;); //TODO EDE a retirer</span>
-<span class="fc" id="L71">			} catch (InterruptedException e) {</span>
-<span class="fc" id="L72">				break;</span>
+<span class="nc" id="L71">			} catch (InterruptedException e) {</span>
+<span class="nc" id="L72">				break;</span>
 <span class="nc" id="L73">			}</span>
 <span class="nc" id="L74">		}</span>
 		
-<span class="fc" id="L76">	}</span>
+<span class="nc" id="L76">	}</span>
+	/*@Override
+	public void run() {
+		StopWatch stopWatch = new StopWatch();
+		while(true) {
+			if(Thread.currentThread().isInterrupted() || stop) {
+				logger.debug(&quot;Tracker stopping&quot;);
+				break;
+			}
+
+			List&lt;User&gt; users = tourGuideService.getAllUsers();
+			logger.debug(&quot;Begin Tracker. Tracking &quot; + users.size() + &quot; users.&quot;);
+			stopWatch.start();
+			logger.debug(&quot;start exec&quot;);
+			ExecutorService executor = Executors.newFixedThreadPool(1000);
+			users.forEach(u -&gt; {
+//				logger.debug(&quot;loop&quot;);
+				Runnable runnableTask = () -&gt; {
+					tourGuideService.trackUserLocation(u);
+//					logger.debug(&quot;run--------------------------&quot;+ u.getUserName());
+			};
+				executor.execute(runnableTask);
+			});
+			logger.debug(&quot;shutdown&quot;);
+			executor.shutdown();
+
+			try {
+				//if (!executor.awaitTermination(800, TimeUnit.MILLISECONDS)) {
+				if (!executor.awaitTermination(15, TimeUnit.MINUTES)) { //15 minutes est notre objectif
+					logger.debug(&quot;************* end now ********************&quot;);
+					executor.shutdownNow();
+				}
+			} catch (InterruptedException e) {
+				logger.debug(&quot;************* end now catch *************&quot;);
+				executor.shutdownNow();
+			}
+			logger.debug(&quot;end&quot;);
+
+			stopWatch.stop();
+			logger.debug(&quot;Tracker Time Elapsed: &quot; + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + &quot; seconds.&quot;);
+			stopWatch.reset();
+			try {
+				logger.debug(&quot;Tracker sleeping&quot;);
+				TimeUnit.SECONDS.sleep(trackingPollingInterval);
+				logger.debug(&quot;Tracker END of sleeping&quot;); //TODO EDE a retirer
+			} catch (InterruptedException e) {
+				break;
+			}
+		}
+
+	}*/
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.4.201905082037</span></div></body></html>

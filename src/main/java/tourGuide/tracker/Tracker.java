@@ -74,4 +74,54 @@ try {
 		}
 		
 	}
+	/*@Override
+	public void run() {
+		StopWatch stopWatch = new StopWatch();
+		while(true) {
+			if(Thread.currentThread().isInterrupted() || stop) {
+				logger.debug("Tracker stopping");
+				break;
+			}
+
+			List<User> users = tourGuideService.getAllUsers();
+			logger.debug("Begin Tracker. Tracking " + users.size() + " users.");
+			stopWatch.start();
+			logger.debug("start exec");
+			ExecutorService executor = Executors.newFixedThreadPool(1000);
+			users.forEach(u -> {
+//				logger.debug("loop");
+				Runnable runnableTask = () -> {
+					tourGuideService.trackUserLocation(u);
+//					logger.debug("run--------------------------"+ u.getUserName());
+			};
+				executor.execute(runnableTask);
+			});
+			logger.debug("shutdown");
+			executor.shutdown();
+
+			try {
+				//if (!executor.awaitTermination(800, TimeUnit.MILLISECONDS)) {
+				if (!executor.awaitTermination(15, TimeUnit.MINUTES)) { //15 minutes est notre objectif
+					logger.debug("************* end now ********************");
+					executor.shutdownNow();
+				}
+			} catch (InterruptedException e) {
+				logger.debug("************* end now catch *************");
+				executor.shutdownNow();
+			}
+			logger.debug("end");
+
+			stopWatch.stop();
+			logger.debug("Tracker Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
+			stopWatch.reset();
+			try {
+				logger.debug("Tracker sleeping");
+				TimeUnit.SECONDS.sleep(trackingPollingInterval);
+				logger.debug("Tracker END of sleeping"); //TODO EDE a retirer
+			} catch (InterruptedException e) {
+				break;
+			}
+		}
+
+	}*/
 }

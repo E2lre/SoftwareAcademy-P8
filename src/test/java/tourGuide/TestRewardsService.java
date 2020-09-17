@@ -13,15 +13,18 @@ import org.junit.Test;
 import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.VisitedLocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rewardCentral.RewardCentral;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
+import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
 
 public class TestRewardsService {
-
+	private Logger logger = LoggerFactory.getLogger(TestRewardsService.class);
 	@Test
 	public void userGetRewards() {
 		Locale.setDefault(Locale.US);
@@ -64,6 +67,8 @@ public class TestRewardsService {
 		tourGuideService.tracker.stopTracking();
 
 
+		logger.debug( "getAttractions : " + gpsUtil.getAttractions().size());
+		logger.debug( "userRewards : " + userRewards.size());
 		assertEquals(gpsUtil.getAttractions().size(), userRewards.size());
 	}
 	
